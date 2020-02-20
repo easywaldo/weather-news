@@ -4,9 +4,9 @@ import './App.css';
 import WeatherService from './service/weatherService';
 
 function App() {
-  let newsList = new WeatherService();
-  let result = newsList.getNewsList();
-  console.log(result);
+  //let newsList = new WeatherService();
+  //let result = newsList.getNewsList();
+  //console.log(result);
 
   return (
     <div className="App">

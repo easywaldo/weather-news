@@ -1,25 +1,40 @@
+import { wait } from "@testing-library/dom";
+
+let newsList = [
+    {
+        "id": 1,
+        "title": "test"
+    }
+];
+
 class WeatherService {
     constructor() {
 
     };
 
     getNewsList = () => {
-        let newsList = [
-            {
-                "id": 1,
-                "title": "test"
-            }
-        ];
 
         fetch('https://easywaldo-test-api.azurewebsites.net/weatherForecast/GetWeatherNews', {
-                mode: 'no-cors',
-            })
-            .then(function (response) {
-                newsList = response;
-                console.log(response);
+                mode: 'cors',
+                method: 'GET',
+                //credentials: 'include',
+                headers: new Headers ({
+                      'Content-Type': 'application/json'
+                })
+            }).then((res) => {
+                return res.json();
+                //resolve(res ? JSON.parse(res) : {})
+            }).then((json) => {
+                console.log(json);
+                newsList = json;
                 return newsList;
             });
         return newsList;
+    };
+
+    testSample = () => {
+        //await wait(1000);
+        return "helloworld";
     };
 }
 
