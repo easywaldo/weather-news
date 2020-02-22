@@ -21,9 +21,9 @@ test('weatherService should return news list', () => {
   expect(result).toEqual(newsList);
 });
 
- test('test sample should return hello world', () => {
+test('test sample should return hello world', () => {
    var expectValue = "helloworld";
    let sut = new WeatherService();
    const result = sut.testSample();
    expect(result).toEqual(expectValue);
- });
+});
