@@ -14,7 +14,7 @@ class WeatherService {
 
     getNewsList = () => {
 
-        fetch('https://easywaldo-test-api.azurewebsites.net/weatherForecast/GetWeatherNews', {
+        fetch('https://localhost:5001/weatherforecast/GetWeatherNews', {
                 mode: 'cors',
                 method: 'GET',
                 //credentials: 'include',

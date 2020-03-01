@@ -3,11 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import WeatherService from './service/weatherService';
 import WeatherList from './component/weatherList';
+import { underline } from 'ansi-colors';
 
 
 let newsList = new WeatherService();
-let result = newsList.getNewsList();
-console.log(result);
+//let result = newsList.getNewsList();
+//console.log(result);
+let newsUrlDev = "https://localhost:5001/weatherforecast/GetWeatherNews";
+let newsUrlLive = "https://easywaldo-test-api.azurewebsites.net/weatherForecast/GetWeatherNews";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -18,47 +22,42 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    fetch('https://easywaldo-test-api.azurewebsites.net/weatherForecast/GetWeatherNews', {
-                mode: 'cors',
-                method: 'GET',
-                //credentials: 'include',
-                headers: new Headers ({
-                      'Content-Type': 'application/json'
-                })
-            }).then((res) => {
-                return res.json();
-                //resolve(res ? JSON.parse(res) : {})
-            }).then((json) => {
-                console.log(json);
-                newsList = json;
-                this.setState({
-                  isLoaded: true,
-                  items: newsList
-                });
-                return newsList;
-            });
+    fetch(newsUrlLive, {
+          mode: 'cors',
+          method: 'GET',
+          credentials: 'include',
+          headers: new Headers ({
+                'Content-Type': 'application/json'
+          })
+      }).then((res) => {
+          //if (res.ok === false) {
+            // this.setState({
+            //   isLoaded: true,
+            //   items: null
+            // });
+            // throw new Error('Network response was not ok.');
+          //}
+          //else {
+            return res.json();
+          //}
+          //resolve(res ? JSON.parse(res) : {})
+      }).catch(function(error) {
+          console.log('There has been a problem with your fetch operation: ', error.message);
+      }).then((json) => {
+          //if (json === null) return null;
+          console.log(json);
+          newsList = json;
+          this.setState({
+            isLoaded: true,
+            items: newsList
+          });
+          return newsList;
+      });
   }
 
   render() {
     const { isLoaded, items } = this.state;
-    //return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    if (isLoaded == true) {
+    if (isLoaded === true) {
       return (
         <WeatherList weatherList={items}/>
       );
